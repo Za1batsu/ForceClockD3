@@ -1,0 +1,19 @@
+body{
+  background-color: lightgrey;
+}
+
+.digitalClock{
+  background-color: grey;
+  width: 80%;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.canvas{
+  background-color: none;
+}
+
+.node{
+  stroke: black;
+  stroke-width: 1.5px;
+}
