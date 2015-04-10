@@ -1,6 +1,9 @@
 body{
   background-color: none;
 }
+div{
+  margin-top: 5%;
+}
 
 .digitalClock{
   /*background-color: #c7c7c7;*/
@@ -24,7 +27,7 @@ body{
 
 .minute{
   color: #9467bd;
-  margin-left: 35%;
+  margin-left: 34%;
 }
 .hour{
   color: #17becf;

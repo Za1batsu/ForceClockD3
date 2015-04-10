@@ -31,6 +31,12 @@ var secondForce = d3.layout.force()
               .gravity(0)
               .charge(-10)
               .size([clockSettings.width, clockSettings.height])
+              // .on({
+              //   'mousedown': function(){d3.event.stopPropagation();},
+              //   'tick': secondTick
+              // });
+
+              // .on('mousedown', function(){d3.event.stopPropagation();})
               .on('tick', secondTick); //Invoke 'tick' on every...tick.
 var minuteForce = d3.layout.force()
               .nodes(clockSettings.minuteNodes)
@@ -38,6 +44,11 @@ var minuteForce = d3.layout.force()
               .gravity(0)
               .charge(-15)
               .size([clockSettings.width, clockSettings.height])
+              // .on({
+              //   'mousedown': function(){d3.event.stopPropagation();},
+              //   'tick': minuteTick
+              // });
+              //  .on('mousedown', function(){d3.event.stopPropagation();})
               .on('tick', minuteTick); //Invoke 'tick' on every...tick.
 var hourForce = d3.layout.force()
               .nodes(clockSettings.hourNodes)
@@ -45,6 +56,11 @@ var hourForce = d3.layout.force()
               .gravity(0)
               .charge(-50)
               .size([clockSettings.width, clockSettings.height])
+              // .on({
+              //   'mousedown': function(){d3.event.stopPropagation();},
+              //   'tick': hourTick
+              // });
+              // .on('mousedown', function(){d3.event.stopPropagation();})
               .on('tick', hourTick); //Invoke 'tick' on every...tick.
 // var force = d3.layout.force()
 //               .nodes(clockSettings.nodes)
@@ -95,6 +111,25 @@ function hourTick(e){
       .attr("cy", function(d) { return d.y; });
 }
 
+function mousedown(){
+  clockSettings.secondNodes.forEach(function(item, index){
+    item.x += (Math.random() - 0.5) * 40;
+    item.y += (Math.random() - 0.5) * 40;
+  });
+  secondForce.resume();
+
+  clockSettings.minuteNodes.forEach(function(item, index){
+    item.x += (Math.random() - 0.5) * 40;
+    item.y += (Math.random() - 0.5) * 40;
+  });
+  minuteForce.resume();
+  clockSettings.hourNodes.forEach(function(item, index){
+    item.x += (Math.random() - 0.5) * 40;
+    item.y += (Math.random() - 0.5) * 40;
+  });
+  hourForce.resume();
+}
+
 var spawnSecond = function(){
   clockSettings.secondNodes.push({id:[0]});
   secondForce.start();
@@ -111,8 +146,13 @@ var spawnSecond = function(){
 
   clockSettings.secondCount++;
 };
-var spawnMinute = function(){
-  clockSettings.minuteNodes.push({id:[1]});
+var spawnMinute = function(secNode){
+  if(!secNode){
+    clockSettings.minuteNodes.push({id:[1]});    
+  }else{
+    secNode.id[0] = 1;
+    clockSettings.minuteNodes.push(secNode);
+  }
   minuteForce.start();
 
   minuteNode = minuteNode.data(clockSettings.minuteNodes);
@@ -152,13 +192,17 @@ var spawnHour = function(){
 };
 
 var convertSeconds = function(){
-  // force.stop();
-  // clockSettings.secondNodes = [];
-  // svg.selectAll('.seconds').data(clockSettings.secondNodes)
-  //   .exit().remove();
+  spawnMinute(clockSettings.secondNodes[0]);
   clockSettings.secondNodes.splice(0);
 
   svg.selectAll('.seconds').data(clockSettings.secondNodes).exit().remove();
+
+  // var lastSecond = svg.select('.seconds');
+  // lastSecond.classed({'seconds':false, 'minutes':true})
+  //                             .attr("r", 8)
+  //                             .style('fill', '#9467bd');
+  //clockSettings.minuteNodes.push(svg.select('.seconds'));
+
   clockSettings.secondCount = -1;
 };
 
@@ -170,12 +214,12 @@ var convertMinutes = function(){
 };
 var init = function(){
   var s=0, m=0, h=0;
-  while(s++<date.getSeconds()){
-  // while(s++<57){
+  // while(s++<date.getSeconds()){
+  while(s++<57){
     spawnSecond();
   }
-  while(m++<date.getMinutes()){
-   // while(m++<59){
+  // while(m++<date.getMinutes()){
+   while(m++<59){
     spawnMinute();
   }
   while(h++<date.getHours()){
@@ -194,7 +238,7 @@ var update = function(){
       convertMinutes();
       spawnHour();
     }    
-    spawnMinute();    
+    //spawnMinute();    
   }
   spawnSecond();
 
