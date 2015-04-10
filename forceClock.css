@@ -1,9 +1,9 @@
 body{
-  background-color: lightgrey;
+  background-color: none;
 }
 
 .digitalClock{
-  background-color: grey;
+  /*background-color: #c7c7c7;*/
   width: 80%;
   height: 100px;
   margin-left: auto;
@@ -12,21 +12,24 @@ body{
 
 .digital{
   font-size: 100px;
+  /*color: #843c39;*/
   /*margin-right: 11.5%;
   margin-left: 11.5%;*/
 }
 .second{
-  color: blue;
+  color: #843c39;
   float: right;
+  margin-right: 2%;
 }
 
 .minute{
-  color: red;
+  color: #9467bd;
   margin-left: 35%;
 }
 .hour{
-  color: green;
+  color: #17becf;
   float: left;
+  margin-left: 2%;
 }
 .canvas{
   background-color: none;

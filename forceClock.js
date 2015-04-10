@@ -4,11 +4,6 @@
 var clockSettings = {
   height: window.innerHeight/3*2,
   width: window.innerWidth,
-  fillColor: {
-    second: 'blue',
-    minute: 'red',
-    hour: 'green'
-  },
   //nodes: [],
   secondNodes: [],
   minuteNodes: [],
@@ -23,6 +18,8 @@ var fociPos = [{x:(clockSettings.width/3)*2.5, y:clockSettings.height/2},
               {x:(clockSettings.width/2), y:clockSettings.height/2}, 
               {x:(clockSettings.width/3)*0.5, y:clockSettings.height/2}];
 
+var fillColor = d3.scale.category20();
+
 var svg = d3.select('body')//.select('div')
                 .append('svg')
                 .attr('height', clockSettings.height+'px')
@@ -32,18 +29,21 @@ var secondForce = d3.layout.force()
               .nodes(clockSettings.secondNodes)
               .links([])
               .gravity(0)
+              .charge(-10)
               .size([clockSettings.width, clockSettings.height])
               .on('tick', secondTick); //Invoke 'tick' on every...tick.
 var minuteForce = d3.layout.force()
               .nodes(clockSettings.minuteNodes)
               .links([])
               .gravity(0)
+              .charge(-15)
               .size([clockSettings.width, clockSettings.height])
               .on('tick', minuteTick); //Invoke 'tick' on every...tick.
 var hourForce = d3.layout.force()
               .nodes(clockSettings.hourNodes)
               .links([])
               .gravity(0)
+              .charge(-50)
               .size([clockSettings.width, clockSettings.height])
               .on('tick', hourTick); //Invoke 'tick' on every...tick.
 // var force = d3.layout.force()
@@ -104,8 +104,8 @@ var spawnSecond = function(){
                 .attr('class', 'seconds')
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; })
-                .attr("r", 4)
-                .style('fill', clockSettings.fillColor.second)
+                .attr("r", 5)
+                .style('fill', '#843c39')
                 .call(secondForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
 
@@ -123,7 +123,7 @@ var spawnMinute = function(){
                   .attr("cx", function(d) { return d.x; })
                   .attr("cy", function(d) { return d.y; })
                   .attr("r", 8)
-                  .style('fill', clockSettings.fillColor.minute)
+                  .style('fill', '#9467bd')
                   .call(minuteForce.drag);
     //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -143,7 +143,7 @@ var spawnHour = function(){
                   .attr("cx", function(d) { return d.x; })
                   .attr("cy", function(d) { return d.y; })
                   .attr("r", 12)
-                  .style('fill', clockSettings.fillColor.hour)
+                  .style('fill', '#17becf')
                   .call(hourForce.drag);
     //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -179,7 +179,7 @@ var init = function(){
     spawnMinute();
   }
   while(h++<date.getHours()){
-   // while(h++<2){
+   // while(h++<24){
     spawnHour();
   }
 
