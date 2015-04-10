@@ -9,6 +9,25 @@ body{
   margin-left: auto;
   margin-right: auto;
 }
+
+.digital{
+  font-size: 100px;
+  /*margin-right: 11.5%;
+  margin-left: 11.5%;*/
+}
+.second{
+  color: blue;
+  float: right;
+}
+
+.minute{
+  color: red;
+  margin-left: 35%;
+}
+.hour{
+  color: green;
+  float: left;
+}
 .canvas{
   background-color: none;
 }

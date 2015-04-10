@@ -159,14 +159,14 @@ var convertSeconds = function(){
   clockSettings.secondNodes.splice(0);
 
   svg.selectAll('.seconds').data(clockSettings.secondNodes).exit().remove();
-  clockSettings.secondCount = 0;
+  clockSettings.secondCount = -1;
 };
 
 var convertMinutes = function(){
   // force.stop();
   clockSettings.minuteNodes.splice(0);
   svg.selectAll('.minutes').data(clockSettings.minuteNodes).exit().remove();
-  clockSettings.minuteCount = 0;
+  clockSettings.minuteCount = -1;
 };
 var init = function(){
   var s=0, m=0, h=0;
@@ -182,6 +182,8 @@ var init = function(){
    // while(h++<2){
     spawnHour();
   }
+
+  updateDigital();
 };
 
 //Updates for every second
@@ -191,13 +193,36 @@ var update = function(){
     if(clockSettings.minuteCount >=59){
       convertMinutes();
       spawnHour();
-    }
-    
-      spawnMinute();
-    
+    }    
+    spawnMinute();    
   }
-    spawnSecond();
-  
+  spawnSecond();
+
+
+  //update digital clock
+  updateDigital();
+};
+
+var updateDigital = function(){
+  var digSec = clockSettings.secondCount;
+  var digMin = clockSettings.minuteCount;
+  var digHour = clockSettings.hourCount;
+
+  if(digSec<10){
+    $('.second').text('0'+digSec);
+  } else{
+    $('.second').text(digSec);
+  }
+  if(digMin<10){
+    $('.minute').text('0'+digMin);  
+  }else{
+    $('.minute').text(digMin);  
+  }
+  if(digHour<10){
+    $('.hour').text('0'+digHour);    
+  }else{
+    $('.hour').text(digHour);    
+  }
 };
 
 
@@ -206,17 +231,8 @@ var update = function(){
 
 
 
-
 var date = new Date();
-//console.dir(clockSettings.secondNodes);
-// spawnSecond();
-// spawnMinute();
-// spawnHour();
-init();
-
-// setTimeout(update, 3000);
-// setTimeout(update, 5000);
-// setTimeout(update, 6000);
+init(); //populate canvas according to real time.
 
 setInterval(update, 1000);
 
