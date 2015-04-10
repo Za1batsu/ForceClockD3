@@ -1,5 +1,5 @@
 body{
-  background-color: none;
+  background-color: #DBFFFF;
 }
 div{
   margin-top: 5%;
@@ -24,21 +24,31 @@ div{
   float: right;
   margin-right: 2%;
 }
+.seconds{
+  stroke: #FFA375;
+}
 
 .minute{
   color: #9467bd;
   margin-left: 34%;
 }
+.minutes{
+  stroke: pink;
+}
+
 .hour{
   color: #17becf;
   float: left;
   margin-left: 2%;
 }
+.hours{
+  stroke: yellow;
+}
+
 .canvas{
   background-color: none;
 }
 
 .node{
-  stroke: black;
-  stroke-width: 1.5px;
+  stroke-width: 2px;
 }
