@@ -11,38 +11,37 @@ div{
   height: 100px;
   margin-left: auto;
   margin-right: auto;
+  font-size: 100px;
+  font-family: 'Roboto', sans-serif;
 }
 
-.digital{
-  font-size: 100px;
-  /*color: #843c39;*/
-  /*margin-right: 11.5%;
-  margin-left: 11.5%;*/
-}
 .second{
   color: #843c39;
   float: right;
   margin-right: 2%;
 }
 .seconds{
-  stroke: #FFA375;
+  stroke: white;
+  fill: #843c39;
 }
 
 .minute{
-  color: #9467bd;
-  margin-left: 34%;
+  color: purple;
+  margin-left: 32%;
 }
 .minutes{
   stroke: pink;
+  fill: purple;
 }
 
 .hour{
-  color: #17becf;
+  color: teal;
   float: left;
   margin-left: 2%;
 }
 .hours{
   stroke: yellow;
+  fill: teal;
 }
 
 .canvas{

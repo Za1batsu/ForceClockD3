@@ -133,7 +133,7 @@ var spawnSecond = function() {
       return d.y;
     })
     .attr("r", 5)
-    .style('fill', '#843c39')
+    //.style('fill', '#843c39')
     .call(secondForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
 
@@ -158,7 +158,7 @@ var spawnMinute = function() {
       return d.y;
     })
     .attr("r", 8)
-    .style('fill', '#9467bd')
+    // .style('fill', '#9467bd')
     .call(minuteForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -184,7 +184,7 @@ var spawnHour = function() {
       return d.y;
     })
     .attr("r", 12)
-    .style('fill', '#17becf')
+    // .style('fill', '#17becf')
     .call(hourForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -269,23 +269,6 @@ var update = function() {
       converHour();
     }
   }
-
-  // if (clockSettings.secondNodes.length >= 59) {
-  //   convertSeconds();
-  //   if (clockSettings.minuteNodes.length >= 59) {
-  //     convertMinutes();
-  //     spawnHour();
-  //     hourBump();
-  //   }else{
-
-  //     spawnMinute();
-  //     minuteBump();
-  //   }
-  // }else{
-
-  //   spawnSecond();
-  //   secondBump();
-  // }
 
 
   //update digital clock
@@ -398,4 +381,4 @@ d3.select('body').on('mousedown', function() {
 
 init(); //populate canvas according to real time.
 
-setInterval(update, 500);
+d3.timer(update, 500);
