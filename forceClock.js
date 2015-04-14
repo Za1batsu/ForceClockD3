@@ -1,9 +1,3 @@
-$(document).ready(function() {
-  init(); //populate canvas according to real time.
-
-  setInterval(update, 500);
-});
-
 //Variable to hold settings and information
 var clockSettings = {
   height: window.innerHeight / 3 * 2,
@@ -39,7 +33,6 @@ var svg = d3.select('body') //.select('div')
   .classed({
     'canvas': true
   });
-
 var secondForce = d3.layout.force()
   .nodes(clockSettings.secondNodes)
   .links([])
@@ -217,7 +210,7 @@ var convertMinutes = function() {
   // clockSettings.minuteCount = -1;
 };
 
-var convertHour = function() {
+var convertHour = function(){
   clockSettings.hourNodes.splice(0);
   svg.selectAll('.hours').data(clockSettings.hourNodes).exit().remove();
 };
@@ -241,22 +234,17 @@ var init = function() {
   }
 
   updateDigital();
-  // secondForce.start();
-  // minuteForce.start();
-  // hourForce.start();
-
-  minuteForce.drag();
 };
 
 //Updates for every second
 var update = function() {
   var date = new Date();
   var s = date.getSeconds(),
-    m = date.getMinutes(),
-    h = date.getHours();
+      m = date.getMinutes(),
+      h = date.getHours();
 
-  while (s !== clockSettings.secondNodes.length) {
-    if (s > clockSettings.secondNodes.length) {
+  while(s!==clockSettings.secondNodes.length){
+    if(s>clockSettings.secondNodes.length){  
       spawnSecond();
       secondBump();
     } else {
@@ -264,8 +252,8 @@ var update = function() {
     }
   }
 
-  while (m !== clockSettings.minuteNodes.length) {
-    if (m > clockSettings.minuteNodes.length) {
+  while(m!==clockSettings.minuteNodes.length){
+    if(m>clockSettings.minuteNodes.length){  
       spawnMinute();
       minuteBump();
     } else {
@@ -273,8 +261,8 @@ var update = function() {
     }
   }
 
-  while (h !== clockSettings.hourNodes.length) {
-    if (h > clockSettings.hourNodes.length) {
+  while(h!==clockSettings.hourNodes.length){
+    if(h>clockSettings.hourNodes.length){  
       spawnHour();
       hourBump();
     } else {
@@ -285,7 +273,6 @@ var update = function() {
 
   //update digital clock
   updateDigital();
-
 };
 
 var updateDigital = function() {
@@ -388,9 +375,6 @@ var clickBump = function() {
 
 d3.select('body').on('mousedown', function() {
   clickBump();
-<<<<<<< HEAD
-});
-=======
 });
 
 
@@ -398,4 +382,3 @@ d3.select('body').on('mousedown', function() {
 init(); //populate canvas according to real time.
 
 d3.timer(update, 500);
->>>>>>> f1c79c1cb844e49cfb91c688ba30861610b06b33

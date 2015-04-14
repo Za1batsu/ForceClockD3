@@ -124,3 +124,8 @@ Portrait.prototype.revertices = function() {
   });
 
 };
+
+
+
+
+
