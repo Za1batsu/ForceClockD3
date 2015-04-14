@@ -29,7 +29,11 @@ path {
   margin-left: auto;
   margin-right: auto;
   font-size: 100px;
+<<<<<<< HEAD
   /*font-family: Tahoma, Geneva, sans-serif*/
+=======
+  font-family: 'Roboto', sans-serif;
+>>>>>>> f1c79c1cb844e49cfb91c688ba30861610b06b33
 }
 
 .second{
@@ -44,7 +48,11 @@ path {
 
 .minute{
   color: purple;
+<<<<<<< HEAD
   margin-left: 34%;
+=======
+  margin-left: 32%;
+>>>>>>> f1c79c1cb844e49cfb91c688ba30861610b06b33
 }
 .minutes{
   stroke: pink;

@@ -282,23 +282,6 @@ var update = function() {
     }
   }
 
-  // if (clockSettings.secondNodes.length >= 59) {
-  //   convertSeconds();
-  //   if (clockSettings.minuteNodes.length >= 59) {
-  //     convertMinutes();
-  //     spawnHour();
-  //     hourBump();
-  //   }else{
-
-  //     spawnMinute();
-  //     minuteBump();
-  //   }
-  // }else{
-
-  //   spawnSecond();
-  //   secondBump();
-  // }
-
 
   //update digital clock
   updateDigital();
@@ -405,4 +388,14 @@ var clickBump = function() {
 
 d3.select('body').on('mousedown', function() {
   clickBump();
+<<<<<<< HEAD
 });
+=======
+});
+
+
+
+init(); //populate canvas according to real time.
+
+d3.timer(update, 500);
+>>>>>>> f1c79c1cb844e49cfb91c688ba30861610b06b33
