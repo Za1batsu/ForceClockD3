@@ -1,0 +1,71 @@
+body{
+  background-color: #DBFFFF;
+}
+div{
+  margin-top: 5%;
+}
+
+path {
+  stroke-width: 5px;
+  opacity: 0.2;
+}
+
+.svg2{
+  position: absolute;
+  z-index: -10;
+  top: 0;
+  left: 0;
+}
+
+/*circle {
+  fill: none;
+  pointer-events: none;
+}*/
+
+.digitalClock{
+  /*background-color: #c7c7c7;*/
+  width: 80%;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 100px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.second{
+  color: #843c39;
+  float: right;
+  margin-right: 2%;
+}
+.seconds{
+  stroke: white;
+  fill: #843c39;
+}
+
+.minute{
+  color: purple;
+  margin-left: 34%;
+  margin-left: 32%;
+}
+.minutes{
+  stroke: pink;
+  fill: purple;
+}
+
+.hour{
+  color: teal;
+  float: left;
+  margin-left: 2%;
+}
+.hours{
+  stroke: yellow;
+  fill: teal;
+}
+
+.canvas{
+  background-color: none;
+}
+
+.node{
+  stroke-width: 2px;
+}

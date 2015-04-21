@@ -262,29 +262,9 @@ var update = function() {
       spawnHour();
       hourBump();
     } else {
-      converHour();
+      convertHour();
     }
   }
-
-  // if (clockSettings.secondNodes.length >= 59) {
-  //   convertSeconds();
-  //   if (clockSettings.minuteNodes.length >= 59) {
-  //     convertMinutes();
-  //     spawnHour();
-  //     hourBump();
-  //   }else{
-
-  //     spawnMinute();
-  //     minuteBump();
-  //   }
-  // }else{
-
-  //   spawnSecond();
-  //   secondBump();
-  // }
-
-
-  //update digital clock
   updateDigital();
 };
 
@@ -390,6 +370,38 @@ d3.select('body').on('mousedown', function() {
   clickBump();
 });
 
-init(); //populate svg according to real time.
+init(); 
 
-setInterval(update, 500);
+
+
+
+
+
+//-----------------------------
+//This handles the FPS from stats.js
+var stats = new Stats();
+stats.setMode(0); // 0: fps, 1: ms
+
+// align top-left
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0px';
+stats.domElement.style.top = '0px';
+
+document.body.appendChild(stats.domElement);
+
+var updateStats = function() {
+
+  stats.begin();
+
+  // monitored code goes here
+
+  stats.end();
+
+  requestAnimationFrame(updateStats);
+
+};
+//------------------------------
+
+ requestAnimationFrame(updateStats); //Call updateStates for every frame
+d3.timer(update, 500);
+
