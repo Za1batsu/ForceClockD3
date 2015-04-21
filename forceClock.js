@@ -14,7 +14,7 @@ var clockSettings = {
 
 var fociPos = [{
   x: (clockSettings.width / 3) * 2.5,
-  y: clockSettings.height / 2
+  y: (clockSettings.height / 3) * 2
 }, {
   x: (clockSettings.width / 2),
   y: clockSettings.height / 2
@@ -262,29 +262,9 @@ var update = function() {
       spawnHour();
       hourBump();
     } else {
-      converHour();
+      convertHour();
     }
   }
-
-  // if (clockSettings.secondNodes.length >= 59) {
-  //   convertSeconds();
-  //   if (clockSettings.minuteNodes.length >= 59) {
-  //     convertMinutes();
-  //     spawnHour();
-  //     hourBump();
-  //   }else{
-
-  //     spawnMinute();
-  //     minuteBump();
-  //   }
-  // }else{
-
-  //   spawnSecond();
-  //   secondBump();
-  // }
-
-
-  //update digital clock
   updateDigital();
 };
 
@@ -390,9 +370,8 @@ d3.select('body').on('mousedown', function() {
   clickBump();
 });
 
-init(); //populate svg according to real time.
+init(); 
 
-<<<<<<< HEAD
 
 
 
@@ -423,14 +402,6 @@ var updateStats = function() {
 };
 //------------------------------
 
-
-init(); //populate canvas according to real time.
-requestAnimationFrame(updateStats); //Call updateStates for every frame
+ requestAnimationFrame(updateStats); //Call updateStates for every frame
 d3.timer(update, 500);
 
-
-
-
-=======
-setInterval(update, 500);
->>>>>>> 2ef0b01043877fbd362901d30e954c58aee883d0
