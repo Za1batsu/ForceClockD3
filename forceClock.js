@@ -14,7 +14,7 @@ var clockSettings = {
 
 var fociPos = [{
   x: (clockSettings.width / 3) * 2.5,
-  y: (clockSettings.height / 3) * 2
+  y: (clockSettings.height / 2)
 }, {
   x: (clockSettings.width / 2),
   y: clockSettings.height / 2
