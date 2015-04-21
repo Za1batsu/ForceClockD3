@@ -10,7 +10,6 @@ var clockSettings = {
   tinyBlast: 2,
   tickBlast: 10,
   clickBlast: 60
-    //fociPos:[{x:600, y:250}, {x:400, y:250}, {x:200, y:250}] //Seconds, Minutes, Hours
 };
 
 var fociPos = [{
@@ -28,10 +27,10 @@ var fillColor = d3.scale.category20();
 
 var svg = d3.select('body') //.select('div')
   .append('svg')
-  .attr('height', clockSettings.height + 'px')
-  .attr('width', clockSettings.width + "px")
+  .attr('height', '100%')
+  .attr('width', '100%')
   .classed({
-    'canvas': true
+    'svg': true
   });
 var secondForce = d3.layout.force()
   .nodes(clockSettings.secondNodes)
@@ -62,9 +61,9 @@ var hourForce = d3.layout.force()
 //               .on('tick', tick); //Invoke 'tick' on every...tick.
 
 //var node = svg.selectAll('circle');
-var secondNode = svg.selectAll('.seconds');
-var minuteNode = svg.selectAll('.minutes');
-var hourNode = svg.selectAll('.hours');
+var secondNode = svg.selectAll('.secondNodes');
+var minuteNode = svg.selectAll('.minuteNodes');
+var hourNode = svg.selectAll('.hourNodes');
 
 function secondTick(e) {
   var k = e.alpha * 0.1;
@@ -125,7 +124,7 @@ var spawnSecond = function() {
 
   secondNode = secondNode.data(clockSettings.secondNodes);
   secondNode.enter().append('circle')
-    .attr('class', 'node seconds')
+    .attr('class', 'secondNodes')
     .attr("cx", function(d) {
       return d.x;
     })
@@ -133,7 +132,7 @@ var spawnSecond = function() {
       return d.y;
     })
     .attr("r", 5)
-    //.style('fill', '#843c39')
+    .style('fill', '#222')
     .call(secondForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
 
@@ -150,7 +149,7 @@ var spawnMinute = function() {
 
   // if(!atPos){
   minuteNode.enter().append('circle')
-    .attr('class', 'node minutes')
+    .attr('class', 'minuteNodes')
     .attr("cx", function(d) {
       return d.x;
     })
@@ -158,7 +157,7 @@ var spawnMinute = function() {
       return d.y;
     })
     .attr("r", 8)
-    // .style('fill', '#9467bd')
+    .style('fill', '#E74C3C')
     .call(minuteForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -176,7 +175,7 @@ var spawnHour = function() {
 
   // if(!atPos){
   hourNode.enter().append('circle')
-    .attr('class', 'node hours')
+    .attr('class', 'hourNodes')
     .attr("cx", function(d) {
       return d.x;
     })
@@ -184,7 +183,7 @@ var spawnHour = function() {
       return d.y;
     })
     .attr("r", 12)
-    // .style('fill', '#17becf')
+    .style('fill', '#ECF0F1')
     .call(hourForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -199,20 +198,20 @@ var convertSeconds = function() {
   //   .exit().remove();
   clockSettings.secondNodes.splice(0);
 
-  svg.selectAll('.seconds').data([clockSettings.secondNodes]).exit().remove();
+  svg.selectAll('.secondNodes').data([clockSettings.secondNodes]).exit().remove();
   // clockSettings.secondCount = -1;
 };
 
 var convertMinutes = function() {
   // force.stop();
   clockSettings.minuteNodes.splice(0);
-  svg.selectAll('.minutes').data(clockSettings.minuteNodes).exit().remove();
+  svg.selectAll('.minuteNodes').data(clockSettings.minuteNodes).exit().remove();
   // clockSettings.minuteCount = -1;
 };
 
 var convertHour = function(){
   clockSettings.hourNodes.splice(0);
-  svg.selectAll('.hours').data(clockSettings.hourNodes).exit().remove();
+  svg.selectAll('.hourNodes').data(clockSettings.hourNodes).exit().remove();
 };
 
 var init = function() {
@@ -253,7 +252,7 @@ var update = function() {
   }
 
   while(m!==clockSettings.minuteNodes.length){
-    if(m>clockSettings.minuteNodes.length){  
+    if(m>clockSettings.minuteNodes.length){
       spawnMinute();
       minuteBump();
     } else {
@@ -269,6 +268,23 @@ var update = function() {
       converHour();
     }
   }
+
+  // if (clockSettings.secondNodes.length >= 59) {
+  //   convertSeconds();
+  //   if (clockSettings.minuteNodes.length >= 59) {
+  //     convertMinutes();
+  //     spawnHour();
+  //     hourBump();
+  //   }else{
+
+  //     spawnMinute();
+  //     minuteBump();
+  //   }
+  // }else{
+
+  //   spawnSecond();
+  //   secondBump();
+  // }
 
 
   //update digital clock
@@ -377,8 +393,6 @@ d3.select('body').on('mousedown', function() {
   clickBump();
 });
 
+init(); //populate svg according to real time.
 
-
-init(); //populate canvas according to real time.
-
-d3.timer(update, 500);
+setInterval(update, 500);

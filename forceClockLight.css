@@ -1,5 +1,5 @@
 body{
-  background-color: #2C3E50;
+  background-color: #e6e6e6;
   overflow: hidden;
 }
 
@@ -19,20 +19,19 @@ body{
 .second{
   position: absolute;
   left: 66%;
-  color: #222;
+  color: #4E57E8;
 }
 
 .minute{
   position: absolute;
   left: 33%;
-  color: #E74C3C;
+  color: #6295FF;
 }
 
 .hour{
   position: absolute;
   left: 0%;
-  color: #ECF0F1;
-  float: left;
+  color: #4EA8E8;
 }
 
 .svg{
