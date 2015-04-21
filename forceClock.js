@@ -14,13 +14,13 @@ var clockSettings = {
 
 var fociPos = [{
   x: (clockSettings.width / 3) * 2.5,
-  y: (clockSettings.height / 2)
+  y: (clockSettings.height / 3) * 3
 }, {
   x: (clockSettings.width / 2),
-  y: clockSettings.height / 2
+  y: (clockSettings.height / 3) * 3
 }, {
   x: (clockSettings.width / 3) * 0.5,
-  y: clockSettings.height / 2
+  y: (clockSettings.height / 3) * 3
 }];
 
 var fillColor = d3.scale.category20();
@@ -379,29 +379,29 @@ init();
 
 //-----------------------------
 //This handles the FPS from stats.js
-var stats = new Stats();
-stats.setMode(0); // 0: fps, 1: ms
+// var stats = new Stats();
+// stats.setMode(0); // 0: fps, 1: ms
 
-// align top-left
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0px';
-stats.domElement.style.top = '0px';
+// // align top-left
+// stats.domElement.style.position = 'absolute';
+// stats.domElement.style.left = '0px';
+// stats.domElement.style.top = '0px';
 
-document.body.appendChild(stats.domElement);
+// document.body.appendChild(stats.domElement);
 
-var updateStats = function() {
+// var updateStats = function() {
 
-  stats.begin();
+//   stats.begin();
 
-  // monitored code goes here
+//   // monitored code goes here
 
-  stats.end();
+//   stats.end();
 
-  requestAnimationFrame(updateStats);
+//   requestAnimationFrame(updateStats);
 
-};
+// };
 //------------------------------
 
- requestAnimationFrame(updateStats); //Call updateStates for every frame
+ // requestAnimationFrame(updateStats); //Call updateStates for every frame
 d3.timer(update, 500);
 
