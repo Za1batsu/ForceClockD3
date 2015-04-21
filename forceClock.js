@@ -14,13 +14,13 @@ var clockSettings = {
 
 var fociPos = [{
   x: (clockSettings.width / 3) * 2.5,
-  y: clockSettings.height / 2
+  y: (clockSettings.height / 4) * 3
 }, {
   x: (clockSettings.width / 2),
-  y: clockSettings.height / 2
+  y: (clockSettings.height / 4) * 3
 }, {
   x: (clockSettings.width / 3) * 0.5,
-  y: clockSettings.height / 2
+  y: (clockSettings.height / 4) * 3
 }];
 
 var fillColor = d3.scale.category20();
