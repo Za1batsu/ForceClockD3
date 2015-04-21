@@ -132,7 +132,6 @@ var spawnSecond = function() {
       return d.y;
     })
     .attr("r", 5)
-    .style('fill', '#222')
     .call(secondForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
 
@@ -157,7 +156,6 @@ var spawnMinute = function() {
       return d.y;
     })
     .attr("r", 8)
-    .style('fill', '#E74C3C')
     .call(minuteForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }
@@ -183,7 +181,6 @@ var spawnHour = function() {
       return d.y;
     })
     .attr("r", 12)
-    .style('fill', '#ECF0F1')
     .call(hourForce.drag);
   //clockSettings.secondNodes = svg.selectAll('.seconds');
   // }

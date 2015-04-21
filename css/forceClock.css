@@ -21,11 +21,17 @@ body{
   left: 66%;
   color: #222;
 }
+.secondNodes{
+  fill: #222;
+}
 
 .minute{
   position: absolute;
   left: 33%;
   color: #E74C3C;
+}
+.minuteNodes{
+  fill: #E74C3C;
 }
 
 .hour{
@@ -33,6 +39,9 @@ body{
   left: 0%;
   color: #ECF0F1;
   float: left;
+}
+.hourNodes{
+  fill: #ECF0F1;
 }
 
 .svg{

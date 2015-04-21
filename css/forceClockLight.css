@@ -19,19 +19,28 @@ body{
 .second{
   position: absolute;
   left: 66%;
-  color: #4E57E8;
+  color: #232768;
+}
+.secondNodes{
+  fill: #232768;
 }
 
 .minute{
   position: absolute;
   left: 33%;
-  color: #6295FF;
+  color: #393FA8;
+}
+.minuteNodes{
+  fill: #393FA8;
 }
 
 .hour{
   position: absolute;
   left: 0%;
-  color: #4EA8E8;
+  color: #4E57E8;
+}
+.hourNodes{
+  fill: #4E57E8;
 }
 
 .svg{
