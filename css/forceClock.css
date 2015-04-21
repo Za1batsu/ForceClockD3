@@ -1,0 +1,52 @@
+body{
+  background-color: #2C3E50;
+  overflow: hidden;
+}
+
+.digitalClock{
+  position: absolute;
+  width: 100%;
+  top: 10%;
+  left: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.digital{
+  text-align: center;
+  width: 33%;
+  font-size: 200px;
+}
+.second{
+  position: absolute;
+  left: 66%;
+  color: #222;
+}
+.secondNodes{
+  fill: #222;
+}
+
+.minute{
+  position: absolute;
+  left: 33%;
+  color: #E74C3C;
+}
+.minuteNodes{
+  fill: #E74C3C;
+}
+
+.hour{
+  position: absolute;
+  left: 0%;
+  color: #ECF0F1;
+  float: left;
+}
+.hourNodes{
+  fill: #ECF0F1;
+}
+
+.svg{
+  position: absolute;
+  left: 0;
+  top: 33%;
+  background-color: none;
+}
