@@ -23,6 +23,8 @@ body{
 }
 .secondNodes{
   fill: #222;
+  /*stroke: #1B1B1B;*/
+  /*stroke-width: 2px;*/
 }
 
 .minute{
@@ -32,6 +34,8 @@ body{
 }
 .minuteNodes{
   fill: #E74C3C;
+  /*stroke: #B23B2E;*/
+  /*stroke-width: 3px;*/
 }
 
 .hour{
@@ -42,6 +46,8 @@ body{
 }
 .hourNodes{
   fill: #ECF0F1;
+  /*stroke: #AEB1B1;*/
+  /*stroke-width: 3px;*/
 }
 
 .svg{
