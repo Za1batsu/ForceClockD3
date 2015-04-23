@@ -1,30 +1,12 @@
 //Variable to hold settings and information
-var clockSettings = {
+var settings = {
   height: window.innerHeight / 3 * 2,
   width: window.innerWidth,
-  secondNodes: [],
-  minuteNodes: [],
-  hourNodes: [],
   nodes: [],
   tinyBlast: 2,
   tickBlast: 10,
   clickBlast: 60,
-  secondR: 5,
-  minuteR: 8,
-  hourR: 12,
 };
-
-
-var fociPos = [{
-  x: (clockSettings.width / 3) * 2.5,
-  y: (clockSettings.height / 3) * 3
-}, {
-  x: (clockSettings.width / 2),
-  y: (clockSettings.height / 3) * 3
-}, {
-  x: (clockSettings.width / 3) * 0.5,
-  y: (clockSettings.height / 3) * 3
-}];
 
 var svg = d3.select('body')
   .append('svg')
@@ -32,80 +14,70 @@ var svg = d3.select('body')
   .attr('width', '100%')
   .classed({ 'svg': true });
 
-var setFocal = function(k, o, i) {
-  o.y += (fociPos[o.id].y - o.y) * k;
-  o.x += (fociPos[o.id].x - o.x) * k;
+var seconds = {
+  r: 5,
+  nodes: [],
+  charge: -10,
+  x: (settings.width / 3) * 2.5,
+  y: (settings.height / 3) * 3,
+  node: svg.selectAll('.secondNodes')
 };
 
-var secondTick = function(e) {
+var minutes = {
+  r: 8,
+  nodes: [],
+  charge: -15,
+  x: (settings.width / 2),
+  y: (settings.height / 3) * 3,
+  node: svg.selectAll('.minuteNodes')
+};
+
+var hours = {
+  r: 12,
+  nodes: [],
+  charge: -50,
+  x: (settings.width / 3) * 0.5,
+  y: (settings.height / 3) * 3,
+  node: svg.selectAll('.hourNodes')
+};
+
+var tick = function(tp, e) {
   var k = e.alpha * 0.1;
-  var setFocalSeconds = setFocal.bind(null, k);
  
-  clockSettings.secondNodes.forEach(setFocalSeconds);
+  tp.nodes.forEach(function(o, i){
+    o.y += (tp.y - o.y) * k;
+    o.x += (tp.x - o.x) * k;
+  });
 
-  secondNode
+  tp.node
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; });
 };
 
-var minuteTick = function(e) {
-  var k = e.alpha * 0.1;
-  var setFocalMinutes = setFocal.bind(null, k);
-
-  clockSettings.minuteNodes.forEach(setFocalMinutes);
-
-  minuteNode
-    .attr("cx", function(d) { return d.x; })
-    .attr("cy", function(d) { return d.y; });
-};
-
-var hourTick = function(e) {
-  var k = e.alpha * 0.1;
-  var setFocalHours = setFocal.bind(null, k);
-
-  clockSettings.hourNodes.forEach(setFocalHours);
-
-  hourNode
-    .attr("cx", function(d) { return d.x; })
-    .attr("cy", function(d) { return d.y; });
+var force = function(tp, node){
+  return d3.layout.force()
+    .nodes(tp.nodes)
+    .links([])
+    .gravity(0)
+    .charge(tp.charge)
+    .size([settings.width, settings.height])
+    .on('tick', function(e){
+      tick(tp, e);
+    });
 }
 
-var secondForce = d3.layout.force()
-  .nodes(clockSettings.secondNodes)
-  .links([])
-  .gravity(0)
-  .charge(-10)
-  .size([clockSettings.width, clockSettings.height])
-  .on('tick', secondTick); //Invoke 'tick' on every...tick.
-
-var minuteForce = d3.layout.force()
-  .nodes(clockSettings.minuteNodes)
-  .links([])
-  .gravity(0)
-  .charge(-15)
-  .size([clockSettings.width, clockSettings.height])
-  .on('tick', minuteTick); //Invoke 'tick' on every...tick.
-
-var hourForce = d3.layout.force()
-  .nodes(clockSettings.hourNodes)
-  .links([])
-  .gravity(0)
-  .charge(-50)
-  .size([clockSettings.width, clockSettings.height])
-  .on('tick', hourTick); //Invoke 'tick' on every...tick.
-
-var secondNode = svg.selectAll('.secondNodes');
-var minuteNode = svg.selectAll('.minuteNodes');
-var hourNode = svg.selectAll('.hourNodes');
+var secondForce = force(seconds);
+var minuteForce = force(minutes);
+var hourForce = force(hours);
 
 var spawnSecond = function() {
-  clockSettings.secondNodes.push({ id: [0] });
+  seconds.nodes.push({ id: [0] });
   secondForce.start();
 
   var alpha = Math.random() * 0.6 + 0.2;
 
-  secondNode = secondNode.data(clockSettings.secondNodes);
-  secondNode.enter().append('circle')
+  seconds.node = seconds.node.data(seconds.nodes);
+  seconds.node.enter().append('circle')
     .attr('class', 'secondNodes')
     .attr("cx", function(d) {
       return d.x;
@@ -113,20 +85,20 @@ var spawnSecond = function() {
     .attr("cy", function(d) {
       return d.y;
     })
-    .attr("r", clockSettings.secondR)
+    .attr("r", seconds.r)
     .style('opacity', alpha)
     .call(secondForce.drag);
 };
 
 var spawnMinute = function() {
-  clockSettings.minuteNodes.push({ id: [1] });
+  minutes.nodes.push({ id: [1] });
   minuteForce.start();
 
   var alpha = Math.random() * 0.6 + 0.4;
 
-  minuteNode = minuteNode.data(clockSettings.minuteNodes);
+  minutes.node = minutes.node.data(minutes.nodes);
 
-  minuteNode.enter().append('circle')
+  minutes.node.enter().append('circle')
     .attr('class', 'minuteNodes')
     .attr("cx", function(d) {
       return d.x;
@@ -134,20 +106,20 @@ var spawnMinute = function() {
     .attr("cy", function(d) {
       return d.y;
     })
-    .attr("r", clockSettings.minuteR)
+    .attr("r", minutes.r)
     .style('opacity', alpha)
     .call(minuteForce.drag);
 };
 
 var spawnHour = function() {
-  clockSettings.hourNodes.push({ id: [2] });
+  hours.nodes.push({ id: [2] });
   hourForce.start();
 
   var alpha = Math.random() * 0.6 + 0.2;
 
-  hourNode = hourNode.data(clockSettings.hourNodes);
+  hours.node = hours.node.data(hours.nodes);
 
-  hourNode.enter().append('circle')
+  hours.node.enter().append('circle')
     .attr('class', 'hourNodes')
     .attr("cx", function(d) {
       return d.x;
@@ -155,24 +127,24 @@ var spawnHour = function() {
     .attr("cy", function(d) {
       return d.y;
     })
-    .attr("r", clockSettings.hourR)
+    .attr("r", hours.r)
     .style('opacity', alpha)
     .call(hourForce.drag);
 };
 
 var convertSeconds = function() {
-  clockSettings.secondNodes.splice(0);
-  svg.selectAll('.secondNodes').data([clockSettings.secondNodes]).exit().remove();
+  seconds.nodes.splice(0);
+  svg.selectAll('.secondNodes').data([seconds.nodes]).exit().remove();
 };
 
 var convertMinutes = function() {
-  clockSettings.minuteNodes.splice(0);
-  svg.selectAll('.minuteNodes').data(clockSettings.minuteNodes).exit().remove();
+  minutes.nodes.splice(0);
+  svg.selectAll('.minuteNodes').data(minutes.nodes).exit().remove();
 };
 
 var convertHour = function(){
-  clockSettings.hourNodes.splice(0);
-  svg.selectAll('.hourNodes').data(clockSettings.hourNodes).exit().remove();
+  hours.nodes.splice(0);
+  svg.selectAll('.hourNodes').data(hours.nodes).exit().remove();
 };
 
 var init = function() {
@@ -200,8 +172,8 @@ var update = function() {
       m = date.getMinutes(),
       h = date.getHours();
 
-  while(s!==clockSettings.secondNodes.length){
-    if(s>clockSettings.secondNodes.length){  
+  while(s!==seconds.nodes.length){
+    if(s>seconds.nodes.length){  
       spawnSecond();
       secondBump();
     } else {
@@ -209,8 +181,8 @@ var update = function() {
     }
   }
 
-  while(m!==clockSettings.minuteNodes.length){
-    if(m>clockSettings.minuteNodes.length){
+  while(m!==minutes.nodes.length){
+    if(m>minutes.nodes.length){
       spawnMinute();
       minuteBump();
     } else {
@@ -218,8 +190,8 @@ var update = function() {
     }
   }
 
-  while(h!==clockSettings.hourNodes.length){
-    if(h>clockSettings.hourNodes.length){  
+  while(h!==hours.nodes.length){
+    if(h>hours.nodes.length){  
       spawnHour();
       hourBump();
     } else {
@@ -230,9 +202,9 @@ var update = function() {
 };
 
 var updateDigital = function() {
-  var digSec = clockSettings.secondNodes.length;
-  var digMin = clockSettings.minuteNodes.length;
-  var digHour = clockSettings.hourNodes.length;
+  var digSec = seconds.nodes.length;
+  var digMin = minutes.nodes.length;
+  var digHour = hours.nodes.length;
 
   if (digSec < 10) {
     $('.second').text('0' + digSec);
@@ -252,43 +224,43 @@ var updateDigital = function() {
 };
 
 var bumpTick = function(node, index) {
-  node.x += (Math.random() - 0.5) * clockSettings.tickBlast;
-  node.y += (Math.random() - 0.5) * clockSettings.tickBlast;
+  node.x += (Math.random() - 0.5) * settings.tickBlast;
+  node.y += (Math.random() - 0.5) * settings.tickBlast;
 };
 
 var bumpTiny = function(node, index) {
-  node.x += (Math.random() - 0.5) * clockSettings.tinyBlast;
-  node.y += (Math.random() - 0.5) * clockSettings.tinyBlast;
+  node.x += (Math.random() - 0.5) * settings.tinyBlast;
+  node.y += (Math.random() - 0.5) * settings.tinyBlast;
 }
 
 var bumpClick = function(node, index) {
-  node.x += (Math.random() - 0.5) * clockSettings.clickBlast;
-  node.y += (Math.random() - 0.5) * clockSettings.clickBlast;
+  node.x += (Math.random() - 0.5) * settings.clickBlast;
+  node.y += (Math.random() - 0.5) * settings.clickBlast;
 }
 
 
 var secondBump = function() {
-  clockSettings.secondNodes.forEach(bumpTick);
-  clockSettings.minuteNodes.forEach(bumpTiny);
-  clockSettings.hourNodes.forEach(bumpTiny);
+  seconds.nodes.forEach(bumpTick);
+  minutes.nodes.forEach(bumpTiny);
+  hours.nodes.forEach(bumpTiny);
   secondForce.resume();
   minuteForce.resume();
   hourForce.resume();
 };
 
 var minuteBump = function() {
-  clockSettings.minuteNodes.forEach(bumpTick);
-  clockSettings.secondNodes.forEach(bumpTiny);
-  clockSettings.hourNodes.forEach(bumpTiny);
+  minutes.nodes.forEach(bumpTick);
+  seconds.nodes.forEach(bumpTiny);
+  hours.nodes.forEach(bumpTiny);
   minuteForce.resume();
   secondForce.resume();
   hourForce.resume();
 };
 
 var hourBump = function() {
-  clockSettings.hourNodes.forEach(bumpTick);
-  clockSettings.secondNodes.forEach(bumpTiny);
-  clockSettings.minuteNodes.forEach(bumpTiny);
+  hours.nodes.forEach(bumpTick);
+  seconds.nodes.forEach(bumpTiny);
+  minutes.nodes.forEach(bumpTiny);
   hourForce.resume();
   secondForce.resume();
   minuteForce.resume();
@@ -297,9 +269,9 @@ var hourBump = function() {
 var clickBump = function() {
   d3.event.stopPropagation();
 
-  clockSettings.secondNodes.forEach(bumpClick);
-  clockSettings.minuteNodes.forEach(bumpClick);
-  clockSettings.hourNodes.forEach(bumpClick);
+  seconds.nodes.forEach(bumpClick);
+  minutes.nodes.forEach(bumpClick);
+  hours.nodes.forEach(bumpClick);
   secondForce.resume();
   minuteForce.resume();
   hourForce.resume();
