@@ -85,7 +85,7 @@ var spawn = function(tp) {
 
 var convert = function(tp){
   tp.nodes.splice(0);
-  svg.selectAll(tp.nodeClass).data([tp.nodes]).exit().remove();
+  svg.selectAll('.' + tp.stringed + 'Nodes').data([tp.nodes]).exit().remove();
 };
 
 
