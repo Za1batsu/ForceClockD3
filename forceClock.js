@@ -4,23 +4,15 @@ var svg = d3.select('body')
   .attr('width', '100%')
   .classed({ 'svg': true });
 
-var set = {};
-var seconds = {};
-var minutes = {};
-var hours = {};
-
 set.height = window.innerHeight;
 set.width = window.innerWidth;
 set.nodes = [seconds, minutes, hours];
-set.sBlast = 2;
-set.mBlast = 10;
-set.lBlast = 60;
 
 var force = function(tp, node){
   return d3.layout.force()
     .nodes(tp.nodes)
     .links([])
-    .gravity(0)
+    .gravity(tp.g)
     .charge(tp.charge)
     .size([set.width, set.height])
     .on('tick', function(e){
@@ -28,27 +20,21 @@ var force = function(tp, node){
     });
 };
 
-seconds.r = 5;
 seconds.nodes = [];
-seconds.charge = -10;
 seconds.stringed = 'second';
 seconds.x = (set.width / 3) * 2.5;
 seconds.y = (set.height / 3) * 2;
 seconds.node = svg.selectAll('.' + this.stringed + 'Nodes');
 seconds.force = force(seconds);
 
-minutes.r = 8;
 minutes.nodes = [];
-minutes.charge = -15;
 minutes.stringed = 'minute';
 minutes.x = (set.width / 2);
 minutes.y = (set.height / 3) * 2;
 minutes.node = svg.selectAll('.' + this.stringed + 'Nodes');
 minutes.force = force(minutes);
 
-hours.r = 12;
 hours.nodes = [];
-hours.charge = -50;
 hours.stringed = 'hour';
 hours.x = (set.width / 3) * 0.5;
 hours.y = (set.height / 3) * 2;
@@ -129,7 +115,7 @@ d3.select('body').on('mousedown', function() {
   d3.event.stopPropagation();
   for (var i = 0; i < set.nodes.length; i++) {
     set.nodes[i].nodes.forEach(function(node, index){
-      bump(set.lBlast, node, index);
+      bump(set.largeBlast, node, index);
     });
     set.nodes[i].force.resume();
   };
@@ -137,13 +123,13 @@ d3.select('body').on('mousedown', function() {
 
 tpBump = function(main, otherOne, otherTwo) {
   main.nodes.forEach(function(node, index){
-    bump(set.mBlast, node, index)
+    bump(set.mediumBlast, node, index)
   });
   otherOne.nodes.forEach(function(node, index){
-    bump(set.sBlast, node, index)
+    bump(set.smallBlast, node, index)
   });
   otherTwo.nodes.forEach(function(node, index){
-    bump(set.sBlast, node, index)
+    bump(set.smallBlast, node, index)
   });
   seconds.force.resume();
   minutes.force.resume();
